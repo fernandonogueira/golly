@@ -1,0 +1,14 @@
+{
+  "name": "golly",
+  "description": "Remote request agent",
+  "keywords": [
+    "remote",
+    "request",
+    "agent",
+    "go"
+  ],
+  "image": "heroku/go:1.6",
+  "mount_dir": "src/github.com/fernandonogueira/golly",
+  "website": "http://github.com/fernandonogueira/golly",
+  "repository": "http://github.com/fernandonogueira/golly"
+}
