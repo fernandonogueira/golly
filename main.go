@@ -21,7 +21,7 @@ func main() {
 	router.LoadHTMLGlob("templates/*.tmpl.html")
 	router.Static("/static", "static")
 
-	router.GET("/syncAnalysis", func(c *gin.Context) {
+	router.POST("/syncAnalysis", func(c *gin.Context) {
 		agentRequest := models.AgentRequest{}
 		c.Bind(&agentRequest)
 		c.JSON(http.StatusOK, agentRequest)
