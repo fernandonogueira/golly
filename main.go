@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/fernandonogueira/golly/models"
+	"github.com/fernandonogueira/golly/handlers"
 )
 
 func main() {
@@ -16,15 +17,28 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
+	region := os.Getenv("REGION")
+
+	if region == "" {
+		log.Fatal("$REGION must be set")
+	}
+
+	requestHandler := handlers.NewRequestHandler()
+
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.LoadHTMLGlob("templates/*.tmpl.html")
 	router.Static("/static", "static")
 
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.tmpl.html", nil)
+	})
+
 	router.POST("/syncAnalysis", func(c *gin.Context) {
 		agentRequest := models.AgentRequest{}
 		c.Bind(&agentRequest)
-		c.JSON(http.StatusOK, agentRequest)
+		response := requestHandler.Execute(agentRequest);
+		c.JSON(http.StatusOK, response)
 	})
 
 	router.Run(":" + port)

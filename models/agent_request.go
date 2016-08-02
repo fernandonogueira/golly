@@ -1,13 +1,44 @@
 package models
 
 type AgentRequest struct {
-	Url string `json:"url"`
-	CheckId int64 `json:"checkId"`
-	Headers map[string]string `json:"headers"`
-	Protocol string `json:"protocol"`
-	HttpMethod string `json:"httpMethod"`
+	/**
+	URL to be analysed
+	 */
+	Url                string `json:"url"`
+	/**
+	Headers to be sent
+	 */
+	Headers            map[string]string `json:"headers"`
+	/**
+	Protocol (for now, only HTTP is supported)
+	 */
+	Protocol           string `json:"protocol"`
+	/**
+	Http method to be used
+	 */
+	HttpMethod         string `json:"httpMethod"`
+	/**
+	Expected status code for response
+	 */
 	ExpectedStatusCode int `json:"expectedStatusCode"`
-	BodyContains string `json:"bodyContains"`
-	Body string `json:"body"`
-	Token string `json:"token"`
+	/**
+	Body must have this content
+	 */
+	BodyContains       string `json:"bodyContains"`
+	/**
+	Request body
+	 */
+	Body               string `json:"body"`
+	/**
+	Request token. Needed for async analysis
+	 */
+	Token              string `json:"token"`
+	/**
+	Always returns body even if status code == 200
+	 */
+	AlwaysReturnBody   bool `json:"alwaysReturnBody"`
+	/**
+	Enables analysis if responde != 200
+	 */
+	AnalysisEnabled    bool `json:"analysisEnabled"`
 }
