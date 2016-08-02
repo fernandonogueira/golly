@@ -7,6 +7,11 @@
     "agent",
     "go"
   ],
+  "env": {
+    "REGION": {
+      "description": "Region name reported by this agent"
+    }
+  },
   "image": "heroku/go:1.6",
   "mount_dir": "src/github.com/fernandonogueira/golly",
   "website": "http://github.com/fernandonogueira/golly",
