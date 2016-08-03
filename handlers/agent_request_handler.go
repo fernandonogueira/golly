@@ -78,8 +78,14 @@ func (r *AgentRequestHandler) Execute(request models.AgentRequest) models.AgentR
 	}
 
 	assignRegionInfo(&response)
+	assignToken(&request, &response)
 
 	return response
+}
+func assignToken(request *models.AgentRequest, response *models.AgentResponse) {
+	if (request.Token != nil) {
+		response.Token = request.Token
+	}
 }
 
 func assignRegionInfo(response *models.AgentResponse) {

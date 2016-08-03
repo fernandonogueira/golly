@@ -32,7 +32,7 @@ type AgentRequest struct {
 	/**
 	Request token. Needed for async analysis
 	 */
-	Token              string `json:"token"`
+	Token              *string `json:"token"`
 	/**
 	Always returns body even if status code == 200
 	 */
