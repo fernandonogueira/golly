@@ -24,6 +24,8 @@ func main() {
 	}
 
 	requestHandler := handlers.NewRequestHandler()
+	webhookHandler := handlers.NewWebhookHandler()
+	requestValidator := handlers.NewRequestValidator()
 
 	router := gin.New()
 	router.Use(gin.Logger())
@@ -39,6 +41,29 @@ func main() {
 		c.Bind(&agentRequest)
 		response := requestHandler.Execute(agentRequest);
 		c.JSON(http.StatusOK, response)
+	})
+
+	router.POST("/", func(c *gin.Context) {
+		log.Println("Hello!")
+	})
+
+	router.POST("/analyze", func(c *gin.Context) {
+		agentRequest := models.AgentRequest{}
+		c.Bind(&agentRequest)
+
+		validationErrors := requestValidator.Validate(agentRequest, true)
+
+		if validationErrors.Error != "" {
+			log.Println("Validation errors found")
+			c.JSON(http.StatusBadRequest, validationErrors)
+			return
+		}
+
+		go func() {
+			response := requestHandler.Execute(agentRequest)
+			webhookHandler.NotifyEndpoint(&agentRequest, &response)
+		}()
+		c.Done()
 	})
 
 	router.Run(":" + port)

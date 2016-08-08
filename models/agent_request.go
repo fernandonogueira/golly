@@ -41,4 +41,8 @@ type AgentRequest struct {
 	Enables analysis if responde != 200
 	 */
 	AnalysisEnabled    bool `json:"analysisEnabled"`
+	/**
+	WebhookAddress to send result to
+	 */
+	WebhookAddress     *string `json:"webhookAddress"`
 }
