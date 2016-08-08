@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/fernandonogueira/golly/models"
 	"github.com/fernandonogueira/golly/handlers"
+	"strconv"
 )
 
 func main() {
@@ -43,11 +44,12 @@ func main() {
 		c.JSON(http.StatusOK, response)
 	})
 
-	router.POST("/", func(c *gin.Context) {
+	router.POST("/printResponse", func(c *gin.Context) {
 		log.Println("Hello!")
 		agentResponse := models.AgentResponse{}
 		c.Bind(&agentResponse)
-		log.Println("duration: " + agentResponse.DurationMs)
+		log.Println("status: " + strconv.Itoa(agentResponse.Status))
+		log.Println("duration: " + strconv.FormatInt(agentResponse.DurationMs, 10))
 	})
 
 	router.POST("/analyze", func(c *gin.Context) {
