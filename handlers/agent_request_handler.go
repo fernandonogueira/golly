@@ -29,11 +29,11 @@ func doRequest(builder *sling.Sling) models.AgentResponse {
 	response := models.AgentResponse{}
 
 	resp, err := httpClient.Do(httpRequest)
+	defer resp.Body.Close()
 	if (err != nil) {
 		response.Result = "ERROR"
 		log.Println(err)
 	} else {
-		defer resp.Body.Close()
 		response.Result = "OK"
 		body, err := ioutil.ReadAll(resp.Body)
 		if (err != nil) {
