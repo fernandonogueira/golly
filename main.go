@@ -45,6 +45,9 @@ func main() {
 
 	router.POST("/", func(c *gin.Context) {
 		log.Println("Hello!")
+		agentResponse := models.AgentResponse{}
+		c.Bind(&agentResponse)
+		log.Println("duration: " + agentResponse.DurationMs)
 	})
 
 	router.POST("/analyze", func(c *gin.Context) {
