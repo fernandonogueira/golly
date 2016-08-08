@@ -31,8 +31,6 @@ func (w *WebhookHandler) NotifyEndpoint(request *models.AgentRequest, response *
 
 		resp, err := http.DefaultClient.Do(request)
 
-		//resp, err := http.Post(*request.WebhookAddress, "application/json", response)
-
 		if err != nil {
 			// handle error
 		}
