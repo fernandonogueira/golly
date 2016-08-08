@@ -2,13 +2,13 @@ package handlers
 
 import (
 	"github.com/fernandonogueira/golly/models"
-	"github.com/dghubble/sling"
 	"net/http"
 	"io/ioutil"
 	"time"
 	"strings"
 	"log"
 	"os"
+	"bytes"
 )
 
 type AgentRequestHandler struct {
@@ -19,16 +19,12 @@ func NewRequestHandler() *AgentRequestHandler {
 	}
 }
 
-func doRequest(builder *sling.Sling) models.AgentResponse {
+func doRequest(request http.Request) models.AgentResponse {
 	httpClient := http.Client{}
-	httpRequest, rErr := builder.Request()
-	if (rErr != nil) {
-		log.Println(rErr.Error())
-	}
 
 	response := models.AgentResponse{}
 
-	resp, err := httpClient.Do(httpRequest)
+	resp, err := httpClient.Do(&request)
 	defer resp.Body.Close()
 	if (err != nil) {
 		response.Result = "ERROR"
@@ -50,23 +46,27 @@ func doRequest(builder *sling.Sling) models.AgentResponse {
 func (r *AgentRequestHandler) Execute(request models.AgentRequest) models.AgentResponse {
 	method := request.HttpMethod;
 
-	builder := sling.New()
+	var prepRequest *http.Request
+	var err error
 
-	switch method {
-	case "GET":
-		builder = builder.Get(request.Url)
-		break
-	case "POST":
-		builder = builder.Post(request.Url)
-		break
-	case "HEAD":
-		builder = builder.Head(request.Url)
-	default:
-		return models.AgentResponse{}
+	if request.Body != "" {
+		prepRequest, err = http.NewRequest(method, request.Url, bytes.NewBuffer([]byte(request.Body)))
+	} else {
+		prepRequest, err = http.NewRequest(method, request.Url, nil)
+	}
+
+	if len(request.Headers) > 0 {
+		for k, v := range request.Headers {
+			prepRequest.Header.Add(k, v)
+		}
+	}
+
+	if err != nil {
+		// handle error
 	}
 
 	start := time.Now().UnixNano()
-	response := doRequest(builder)
+	response := doRequest(*prepRequest)
 	end := time.Now().UnixNano()
 
 	took := end - start

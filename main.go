@@ -54,7 +54,14 @@ func main() {
 
 	router.POST("/analyze", func(c *gin.Context) {
 		agentRequest := models.AgentRequest{}
-		c.Bind(&agentRequest)
+		err := c.Bind(&agentRequest)
+
+		if err != nil {
+			log.Println("Body content invalid. Err: " + err.Error())
+			validationErr := models.ErrorResponse{Error:"Args.Invalid"}
+			c.JSON(http.StatusBadRequest, validationErr)
+			return
+		}
 
 		validationErrors := requestValidator.Validate(agentRequest, true)
 
