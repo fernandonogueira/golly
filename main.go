@@ -27,6 +27,7 @@ func main() {
 	requestHandler := handlers.NewRequestHandler()
 	webhookHandler := handlers.NewWebhookHandler()
 	requestValidator := handlers.NewRequestValidator()
+	traceRouteHandler := handlers.NewTraceRouteHandler()
 
 	router := gin.New()
 	router.Use(gin.Logger())
@@ -76,6 +77,10 @@ func main() {
 			webhookHandler.NotifyEndpoint(&agentRequest, &response)
 		}()
 		c.Done()
+	})
+
+	router.GET("/traceroute", func(c *gin.Context) {
+		go traceRouteHandler.TraceRoute("google.com")
 	})
 
 	router.Run(":" + port)
