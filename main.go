@@ -37,6 +37,10 @@ func main() {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
 	})
 
+	router.GET("/status", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"status":"UP"})
+	})
+
 	router.POST("/syncAnalysis", func(c *gin.Context) {
 		agentRequest := models.AgentRequest{}
 		c.Bind(&agentRequest)
