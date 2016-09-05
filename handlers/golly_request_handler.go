@@ -11,18 +11,18 @@ import (
 	"bytes"
 )
 
-type AgentRequestHandler struct {
+type GollyRequestHandler struct {
 }
 
-func NewRequestHandler() *AgentRequestHandler {
-	return &AgentRequestHandler{
+func NewRequestHandler() *GollyRequestHandler {
+	return &GollyRequestHandler{
 	}
 }
 
-func doRequest(request http.Request) models.AgentResponse {
+func doRequest(request http.Request) models.GollyResponse {
 	httpClient := http.Client{}
 
-	response := models.AgentResponse{}
+	response := models.GollyResponse{}
 
 	resp, err := httpClient.Do(&request)
 	defer resp.Body.Close()
@@ -43,7 +43,7 @@ func doRequest(request http.Request) models.AgentResponse {
 	return response;
 }
 
-func (r *AgentRequestHandler) Execute(request models.AgentRequest) models.AgentResponse {
+func (r *GollyRequestHandler) Execute(request models.GollyRequest) models.GollyResponse {
 	method := request.HttpMethod;
 
 	var prepRequest *http.Request
@@ -85,13 +85,13 @@ func (r *AgentRequestHandler) Execute(request models.AgentRequest) models.AgentR
 	log.Println("Request finished.")
 	return response
 }
-func assignToken(request *models.AgentRequest, response *models.AgentResponse) {
+func assignToken(request *models.GollyRequest, response *models.GollyResponse) {
 	if (request.Token != nil) {
 		response.Token = request.Token
 	}
 }
 
-func assignRegionInfo(response *models.AgentResponse) {
+func assignRegionInfo(response *models.GollyResponse) {
 	regionInfo := models.RegionInfo{}
 	regionInfo.Region = os.Getenv("REGION")
 

@@ -1,6 +1,6 @@
 package models
 
-type AgentResponse struct {
+type GollyResponse struct {
 	Token             *string `json:"token"`
 	DurationMs        int64 `json:"durationMs"`
 	RequestStartEpoch int64 `json:"requestStartEpoch"`

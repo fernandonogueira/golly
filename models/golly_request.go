@@ -1,6 +1,6 @@
 package models
 
-type AgentRequest struct {
+type GollyRequest struct {
 	/**
 	URL to be analysed
 	 */

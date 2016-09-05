@@ -12,7 +12,7 @@ func NewRequestValidator() *RequestValidator {
 	return &RequestValidator{}
 }
 
-func (v *RequestValidator) Validate(request models.AgentRequest, async bool) models.ErrorResponse {
+func (v *RequestValidator) Validate(request models.GollyRequest, async bool) models.ErrorResponse {
 
 	errorResponse := models.ErrorResponse{}
 

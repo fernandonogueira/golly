@@ -42,7 +42,7 @@ func main() {
 	})
 
 	router.POST("/syncAnalysis", func(c *gin.Context) {
-		agentRequest := models.AgentRequest{}
+		agentRequest := models.GollyRequest{}
 		c.Bind(&agentRequest)
 		response := requestHandler.Execute(agentRequest);
 		c.JSON(http.StatusOK, response)
@@ -50,14 +50,14 @@ func main() {
 
 	router.POST("/printResponse", func(c *gin.Context) {
 		log.Println("Hello!")
-		agentResponse := models.AgentResponse{}
+		agentResponse := models.GollyResponse{}
 		c.Bind(&agentResponse)
 		log.Println("status: " + strconv.Itoa(agentResponse.StatusCode))
 		log.Println("duration: " + strconv.FormatInt(agentResponse.DurationMs, 10))
 	})
 
 	router.POST("/analyze", func(c *gin.Context) {
-		agentRequest := models.AgentRequest{}
+		agentRequest := models.GollyRequest{}
 		err := c.Bind(&agentRequest)
 
 		if err != nil {

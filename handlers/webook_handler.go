@@ -16,7 +16,7 @@ func NewWebhookHandler() *WebhookHandler {
 	}
 }
 
-func (w *WebhookHandler) NotifyEndpoint(request *models.AgentRequest, response *models.AgentResponse) {
+func (w *WebhookHandler) NotifyEndpoint(request *models.GollyRequest, response *models.GollyResponse) {
 	if (request.WebhookAddress != nil) {
 		log.Println("Sending webhook..." + *request.WebhookAddress)
 
