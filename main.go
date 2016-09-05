@@ -52,7 +52,7 @@ func main() {
 		log.Println("Hello!")
 		agentResponse := models.AgentResponse{}
 		c.Bind(&agentResponse)
-		log.Println("status: " + strconv.Itoa(agentResponse.Status))
+		log.Println("status: " + strconv.Itoa(agentResponse.StatusCode))
 		log.Println("duration: " + strconv.FormatInt(agentResponse.DurationMs, 10))
 	})
 

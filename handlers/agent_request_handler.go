@@ -37,7 +37,7 @@ func doRequest(request http.Request) models.AgentResponse {
 		}
 		strBody := string(body)
 		response.Body = &strBody
-		response.Status = resp.StatusCode
+		response.StatusCode = resp.StatusCode
 	}
 
 	return response;
@@ -65,12 +65,14 @@ func (r *AgentRequestHandler) Execute(request models.AgentRequest) models.AgentR
 		// handle error
 	}
 
-	start := time.Now().UnixNano()
+	start := time.Now()
 	response := doRequest(*prepRequest)
-	end := time.Now().UnixNano()
+	end := time.Now()
 
-	took := end - start
+	took := end.UnixNano() - start.UnixNano()
 
+	response.RequestStartEpoch = start.UnixNano() / 1000000
+	response.RequestEndEpoch = end.UnixNano() / 1000000
 	response.DurationMs = took / 1000000
 
 	if (strings.EqualFold("OK", response.Result) && !request.AlwaysReturnBody) {
