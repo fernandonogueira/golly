@@ -25,7 +25,9 @@ func doRequest(request http.Request) models.GollyResponse {
 	response := models.GollyResponse{}
 
 	resp, err := httpClient.Do(&request)
-	defer resp.Body.Close()
+	if (resp != nil && resp.Body != nil) {
+		defer resp.Body.Close()
+	}
 	if (err != nil) {
 		response.Result = "ERROR"
 		log.Println(err)
