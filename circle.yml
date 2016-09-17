@@ -2,7 +2,7 @@ machine:
   environment:
     GODIST: "go1.7.linux-amd64.tar.gz"
     IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-    GOPATH: "/home/ubuntu/go"
+    GOPATH: "/home/ubuntu/golly/go"
   post:
     - mkdir -p download
     - test -e download/$GODIST || curl -o download/$GODIST https://storage.googleapis.com/golang/$GODIST
