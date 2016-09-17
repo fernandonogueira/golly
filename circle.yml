@@ -22,8 +22,8 @@ test:
     - go vet
 
   override:
-    - godep get
+    - godep get:
          pwd: "$GOPATH/src/$IMPORT_PATH"
-    - godep go test
+    - godep go test:
          pwd: "$GOPATH/src/$IMPORT_PATH"
 
