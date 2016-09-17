@@ -1,8 +1,6 @@
 machine:
   environment:
     GODIST: "go1.7.linux-amd64.tar.gz"
-    IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-    GOPATH: "/home/ubuntu/golly/go"
   post:
     - mkdir -p download
     - test -e download/$GODIST || curl -o download/$GODIST https://storage.googleapis.com/golang/$GODIST
@@ -16,14 +14,5 @@ dependencies:
     - go get github.com/tools/godep
 
   override:
-    - mkdir -p "$GOPATH/src/$IMPORT_PATH"
-test:
-  pre:
-    - go vet
-
-  override:
-    - godep get:
-         pwd: "go/src/$IMPORT_PATH"
-    - godep go test:
-         pwd: "go/src/$IMPORT_PATH"
-
+    - go get -t -d -v ./...
+    - go build -v
