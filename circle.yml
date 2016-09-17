@@ -23,7 +23,7 @@ test:
 
   override:
     - godep get
-       pwd: "$GOPATH/src/$IMPORT_PATH"
+         pwd: "$GOPATH/src/$IMPORT_PATH"
     - godep go test
-       pwd: "$GOPATH/src/$IMPORT_PATH"
+         pwd: "$GOPATH/src/$IMPORT_PATH"
 
