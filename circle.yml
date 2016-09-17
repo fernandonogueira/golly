@@ -1,4 +1,5 @@
 machine:
+  pwd: "$GOPATH/src/$IMPORT_PATH"
   environment:
     GODIST: "go1.7.linux-amd64.tar.gz"
     IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
@@ -19,8 +20,8 @@ dependencies:
     - rsync -azC --delete ./ "$GOPATH/src/$IMPORT_PATH/"
 test:
   pre:
-    - go vet $IMPORT_PATH
+    - go vet
 
   override:
     - godep get
-    - godep go test $IMPORT_PATH
+    - godep go test
