@@ -14,8 +14,6 @@ dependencies:
   pre:
     - go get github.com/tools/godep
 
-  pwd: "$GOPATH/src/$IMPORT_PATH"
-
   override:
     - mkdir -p "$GOPATH/src/$IMPORT_PATH"
     - rsync -azC --delete ./ "$GOPATH/src/$IMPORT_PATH/"
@@ -25,5 +23,7 @@ test:
 
   override:
     - godep get
+       pwd: "$GOPATH/src/$IMPORT_PATH"
     - godep go test
+       pwd: "$GOPATH/src/$IMPORT_PATH"
 
