@@ -19,8 +19,8 @@ dependencies:
     - rsync -azC --delete ./ "$GOPATH/src/$IMPORT_PATH/"
 test:
   pre:
-    - go vet ./...
+    - go vet $IMPORT_PATH
 
   override:
     - godep get
-    - godep go test ./...
+    - godep go test $IMPORT_PATH
