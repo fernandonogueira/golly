@@ -40,7 +40,10 @@ func doRequest(request http.Request, expectedStatusCode int) models.GollyRespons
 		strBody := string(body)
 		response.Body = &strBody
 	}
-	response.StatusCode = resp.StatusCode
+	if (resp != nil) {
+		response.StatusCode = resp.StatusCode
+	}
+
 
 	return response;
 }
