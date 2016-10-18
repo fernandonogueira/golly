@@ -28,10 +28,12 @@ func doRequest(request http.Request, expectedStatusCode int) models.GollyRespons
 	if (resp != nil && resp.Body != nil) {
 		defer resp.Body.Close()
 	}
-	if (err != nil || resp.StatusCode != expectedStatusCode) {
+	if (err != nil) {
 		response.Result = "ERROR"
 		log.Println("Error executing request: ")
 		log.Println(err)
+	} else if (resp.StatusCode != expectedStatusCode) {
+		response.Result = "ERROR"
 	} else {
 		response.Result = "OK"
 		body, err := ioutil.ReadAll(resp.Body)
