@@ -19,7 +19,7 @@ func NewRequestHandler() *GollyRequestHandler {
 	}
 }
 
-func doRequest(request http.Request) models.GollyResponse {
+func doRequest(request http.Request, expectedStatusCode int) models.GollyResponse {
 	httpClient := http.Client{}
 
 	response := models.GollyResponse{}
@@ -28,7 +28,7 @@ func doRequest(request http.Request) models.GollyResponse {
 	if (resp != nil && resp.Body != nil) {
 		defer resp.Body.Close()
 	}
-	if (err != nil) {
+	if (err != nil || resp.StatusCode != expectedStatusCode) {
 		response.Result = "ERROR"
 		log.Println(err)
 	} else {
@@ -39,8 +39,8 @@ func doRequest(request http.Request) models.GollyResponse {
 		}
 		strBody := string(body)
 		response.Body = &strBody
-		response.StatusCode = resp.StatusCode
 	}
+	response.StatusCode = resp.StatusCode
 
 	return response;
 }
@@ -68,7 +68,7 @@ func (r *GollyRequestHandler) Execute(request models.GollyRequest) models.GollyR
 	}
 
 	start := time.Now()
-	response := doRequest(*prepRequest)
+	response := doRequest(*prepRequest, request.ExpectedStatusCode)
 	end := time.Now()
 
 	took := end.UnixNano() - start.UnixNano()
