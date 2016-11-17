@@ -2,6 +2,8 @@
 
 Golly is a simple tool used to analyze endpoints availability worldwide.
 
+[![Build Status](https://travis-ci.org/fernandonogueira/golly.svg?branch=master)](https://travis-ci.org/fernandonogueira/golly)
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/fernandonogueira/golly)
 
 See the docs (http://docs.gollyapi.apiary.io/)
